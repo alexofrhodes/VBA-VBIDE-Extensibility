@@ -1,34 +1,10 @@
-**WIP**
-
->Disclaimer
+>**Notice**
 >
->Provided as is, read and test.
+>Provided as is, read and test.  
 There be dragons, there be bugs. Feedback is welcome.
 
 
-**Tools to extend and facilitate work with**
-- Modules
-- Procedures
-- Codemodule
-- Designer
-- Userforms
-- other objects
-
-**Notable userforms in this project**
-- ChangeLog Manager
-- Code on the fly
-- Code Finder
-- Project explorer
-- Radial Menu
-- Multipage to modern UI
-
-**Other projects of mine**
-- standalone : Dynamic Ribbon for Excel, Word, PowerPoint, Access
-- standalone : Code Printer
-- addin : Table Manager
-- game : Go aka Baduk aka WeiQi
-
-..and more..
+**Tools to extend and facilitate work with** `Modules` `Procedures` `Codemodule` `Designer` `Userforms` and other objects
 
 <br>
 
