@@ -1,0 +1,49 @@
+
+__________'@WIP__________
+------------------------------
+MODULE: aProcedureArgumentsItem
+------------------------------
+>SetType
+__________'@TODO__________
+------------------------------
+MODULE: aModule
+------------------------------
+>Duplicate
+------------------------------
+MODULE: aModules
+------------------------------
+>SideBySide
+------------------------------
+MODULE: vbArcImports
+------------------------------
+>StringFormatAlignRowsElements
+>printDictionary
+------------------------------
+MODULE: z_ListView
+------------------------------
+------------------------------
+MODULE: aColorScheme
+------------------------------
+>SetEmitter
+------------------------------
+MODULE: aProcedureCode
+------------------------------
+>Contains
+------------------------------
+MODULE: aProcedureMove
+------------------------------
+>IndexInModule
+------------------------------
+MODULE: aProcedureArguments
+------------------------------
+>myItems
+------------------------------
+MODULE: aProcedureArgumentsItem
+------------------------------
+>SetType
+------------------------------
+MODULE: aProject
+------------------------------
+>this
+>CreateLinkedTable
+__________'@BUG__________
