@@ -16,9 +16,9 @@ PURPOSE: GUI to run excel macros
 
 #SingleInstance, force
 SetWorkingDir %A_ScriptDir%
-#include ini-editor.ahk
+#include LIB\ini-editor.ahk
 
-#Include Class_ImageButton.ahk
+#Include LIB\ImageButton.ahk
 EStyle := [[0, 0x80F0F0F0, , , 8, 0xFFF0F0F0, 0x8046B8DA, 2] ; normal
 		, [0, 0x80C6E9F4, , , 8, 0xFFF0F0F0, 0x8046B8DA, 2] ; hover
 		, [0, 0x8086D0E7, , , 8, 0xFFF0F0F0, 0x8046B8DA, 2] ; pressed
@@ -222,73 +222,6 @@ FinalizeGUI:
 	Gui, Add, Button, gRunExcelMacro, [&4] Open Notepad
 */
 
-RunExcelMacro:
-{
-	try {
-		XL := Excel_Get()
-	} catch {
-		MsgBox, 16,, Can't obtain Excel! 
-		return
-	}
-	;MsgBox, 64,, Excel obtained successfully!   ;for debugging purposes
-	
-	IniRead, WorkbookName, config.ini, Settings, WorkbookName
-
-	;a space is allowed in the following format: [&1] MacroName
-	;to allow a GUI accelerator between the braces eg. [accelerator]
-	if instr(A_GuiControl, A_Space){
-		StringSplit, Procedure, A_GuiControl, %A_Space%
-		macro:= "'" . WorkbookName . "'" . "!" . Procedure2 
-	}else{
-		macro:= "'" . WorkbookName . "'" . "!" . A_GuiControl
-	}
-	
-	try {
-		XL.Run(macro)  
-	} catch {
-		MsgBox, 16,, Can't find the macro %A_GuiControl% in %WorkbookName%
-	}
-	
-	return
-}
-
-Excel_Get(WinTitle:="ahk_class XLMAIN", Excel7#:=1) 
-{
-	/*
-		Excel_Get by jethrow (modified)
-		Forum:    https://autohotkey.com/boards/viewtopic.php?f=6&t=31840
-		Github:   https://github.com/ahkon/MS-Office-COM-Basics/blob/master/Examples/Excel/Excel_Get.ahk
-		
-		References
-		https://autohotkey.com/board/topic/88337-ahk-failure-with-excel-get/?p=560328
-		https://autohotkey.com/board/topic/76162-excel-com-errors/?p=484371
-		https://autohotkey.com/boards/viewtopic.php?p=134048#p134048
-	*/
-	
-	
-	static h := DllCall("LoadLibrary", "Str", "oleacc", "Ptr")
-	WinGetClass, WinClass, %WinTitle%
-	if !(WinClass == "XLMAIN")
-		return "Window class mismatch."
-	ControlGet, hwnd, hwnd,, Excel7%Excel7#%, %WinTitle%
-	if (ErrorLevel)
-		return "Error accessing the control hWnd."
-	VarSetCapacity(IID_IDispatch, 16)
-	NumPut(0x46000000000000C0, NumPut(0x0000000000020400, IID_IDispatch, "Int64"), "Int64")
-	if DllCall("oleacc\AccessibleObjectFromWindow", "Ptr", hWnd, "UInt", -16, "Ptr", &IID_IDispatch, "Ptr*", pacc) != 0
-		return "Error calling AccessibleObjectFromWindow."
-	window := ComObject(9, pacc, 1)
-	if ComObjType(window) != 9
-		return "Error wrapping the window object."
-	Loop
-		try return window.Application
-	catch e
-		if SubStr(e.message, 1, 10) = "0x80010001"
-			ControlSend, Excel7%Excel7#%, {Esc}, %WinTitle%
-	else
-		return "Error accessing the application object."
-}
-
 
 ReloadMe:
 	gosub SavePos
@@ -299,7 +232,7 @@ ReloadMe:
 return
 
 MenuSettings:
-	IniSettingsEditor("vbaGUI", "config.ini")
+	IniSettingsEditor("Settings", "config.ini")
 Return
 
 EditFile:
@@ -325,3 +258,7 @@ SavePos:
     IniWrite, %xPos%, config.ini, Settings, xPos
     IniWrite, %yPos%, config.ini, Settings, yPos
 Return
+
+
+#include LIB\RunExcelMacro.ahk
+#include LIB\Excel_Get.ahk
